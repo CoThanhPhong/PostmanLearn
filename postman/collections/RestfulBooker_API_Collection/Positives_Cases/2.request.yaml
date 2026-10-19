@@ -1,0 +1,53 @@
+$kind: http-request
+url: https://restful-booker.herokuapp.com/booking
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"firstname\": \"{{firstname}}\",\r
+
+    \    \"lastname\": \"{{lastname}}\",\r
+
+    \    \"totalprice\": {{totalprice}},\r
+
+    \    \"depositpaid\": {{depositpaid}},\r
+
+    \    \"bookingdates\": {\r
+
+    \        \"checkin\": \"{{checkin}}\",\r
+
+    \        \"checkout\": \"{{checkout}}\"\r
+
+    \    },\r
+
+    \    \"additionalneeds\": \"{{additionalneeds}}\"\r
+
+    }"
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Tạo booking thành công (Status 200)\", function () {\r
+
+      \ pm.response.to.have.status(200);\r
+
+      });\r
+
+      // Kiểm tra tên khách hàng khớp với dữ liệu từ file CSV\r
+
+      pm.test(\"Tên khách hàng khớp với dữ liệu đầu vào\", function () {\r
+
+      \ var jsonData = pm.response.json();\r
+
+      \ var expectedFirstName = pm.iterationData.get(\"firstname\");\r
+
+      \ pm.expect(jsonData.booking.firstname).to.eql(expectedFirstName);\r
+
+      });\r
+
+      // Lưu lại ID\r
+
+      var jsonData = pm.response.json();\r
+
+      pm.environment.set(\"bookingid\", jsonData.bookingid);\r\n"
+    language: text/javascript
+order: 4000

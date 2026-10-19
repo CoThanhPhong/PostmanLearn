@@ -1,0 +1,6 @@
+name: RestfulBooker_Env
+values:
+  - key: token
+    value: ''
+  - key: bookingid
+    value: ''

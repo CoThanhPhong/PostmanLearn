@@ -1,0 +1,14 @@
+$kind: http-request
+url: https://restful-booker.herokuapp.com/booking/{{bookingid}}
+method: DELETE
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Xóa thành công (Status 201 Created)\", function () {\r
+
+      \ pm.response.to.have.status(201);\r
+
+      \ // Hệ thống này quy định xóa thành công trả về mã 201\r
+
+      });"
+    language: text/javascript
+order: 1000

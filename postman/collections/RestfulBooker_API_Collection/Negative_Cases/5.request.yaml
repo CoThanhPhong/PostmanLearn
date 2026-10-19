@@ -1,0 +1,18 @@
+$kind: http-request
+url: https://restful-booker.herokuapp.com/booking/{{bookingid}}
+method: DELETE
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Hệ thống chặn truy cập (Status 403 Forbidden)\", function () {\r
+
+      \ pm.response.to.have.status(403);\r
+
+      });\r
+
+      pm.test(\"Nội dung phản hồi là chữ Forbidden\", function () {\r
+
+      \ pm.expect(pm.response.text()).to.eql(\"Forbidden\");\r
+
+      });"
+    language: text/javascript
+order: 1353050409247762

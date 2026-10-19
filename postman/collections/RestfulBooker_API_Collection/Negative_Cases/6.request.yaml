@@ -1,0 +1,33 @@
+$kind: http-request
+url: https://restful-booker.herokuapp.com/auth
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"username\": \"admin\",\r
+
+    \    \"password\": \"wrongpassword123\"\r
+
+    }"
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Status code vẫn là 200 OK\", function () {\r
+
+      \ pm.response.to.have.status(200);\r
+
+      });\r
+
+      pm.test(\"Hệ thống từ chối cấp token (Bad credentials)\", function () {\r
+
+      \ var jsonData = pm.response.json();\r
+
+      \ pm.expect(jsonData.reason).to.eql(\"Bad credentials\");\r
+
+      \ // Kiểm tra chắc chắn hệ thống không rò rỉ token\r
+
+      \ pm.expect(jsonData).to.not.have.property(\"token\");\r
+
+      });\r\n"
+    language: text/javascript
+order: 1074843353084395

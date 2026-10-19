@@ -1,0 +1,28 @@
+type: dataset
+name: booking_data
+id: 3e370596-0011-4895-bbf7-bb8ab7abf686
+data_dir: .resources
+sources:
+  - from: embedded_datasource
+    datasource:
+      name: source_booking_data
+      id: d4f33000-7f6f-4a8d-b870-2cba6b083288
+      dsKey: source_booking_data
+      format: csv
+      source_type: static
+      location:
+        type: local_filesystem
+        value: .resources/booking_data.csv
+views:
+  - from: embedded_view
+    view:
+      name: source_booking_data_default_view
+      id: 0e0631e5-8758-45c5-b1b7-37e644182a58
+      query: SELECT * FROM source_booking_data
+
+  - from: embedded_view
+    view:
+      name: 'booking_data'
+      id: '2f2bcdbd-6734-4830-9ce9-1f2ca4ed6654'
+      query: |-
+        SELECT * FROM source_booking_data

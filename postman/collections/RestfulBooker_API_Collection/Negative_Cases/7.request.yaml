@@ -1,0 +1,29 @@
+$kind: http-request
+url: https://restful-booker.herokuapp.com/booking
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"firstname\": \"hacker\",\r
+
+    \    \"lastname\": \"test\"\r
+
+    }"
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Máy chủ không xử lý được dữ liệu thiếu (Status 500)\", function () {\r
+
+      \ pm.response.to.have.status(500);\r
+
+      });\r
+
+      \r
+
+      pm.test(\"Nội dung báo lỗi Internal Server Error\", function () {\r
+
+      \ pm.expect(pm.response.text()).to.include(\"Internal Server Error\");\r
+
+      });\r\n"
+    language: text/javascript
+order: 880227270160177

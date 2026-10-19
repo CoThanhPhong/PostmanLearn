@@ -1,0 +1,28 @@
+$kind: http-request
+name: "1"
+url: https://restful-booker.herokuapp.com/auth
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"username\": \"admin\",\r
+
+    \    \"password\": \"password123\"\r
+
+    }"
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Đăng nhập thành công (Status 200)\", function () {\r
+
+      \ pm.response.to.have.status(200);\r
+
+      });\r
+
+      // Lưu token vào biến môi trường\r
+
+      var jsonData = pm.response.json();\r
+
+      pm.environment.set(\"token\", jsonData.token);"
+    language: text/javascript
+order: 5000
