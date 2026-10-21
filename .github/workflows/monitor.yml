@@ -1,8 +1,6 @@
 name: Production Monitor
 
 on:
-  schedule:
-  - cron: '0 * * * *' # Chạy mỗi 1 giờ
   workflow_dispatch: 
 jobs:
   monitor-api:
